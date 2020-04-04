@@ -1,0 +1,1 @@
+insert into USER (ID,LOGIN, PASSWORD, VERIFY_PASSWORD) values (1,'Max', '11111', '11111');
