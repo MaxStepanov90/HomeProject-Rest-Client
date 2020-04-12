@@ -34,13 +34,13 @@ public class DocumentServiceImplTest {
     public void getDocumentsList_Contains() {
         List<Document> documents = new ArrayList<>();
         documents.add(new Document((long) 1, "new document", LocalDate.now(), "Hello!"));
-        when(restTemplate.exchange("http://localhost:8080/documents", HttpMethod.GET,
+        when(restTemplate.exchange("https://localhost:8443/documents", HttpMethod.GET,
                 null, new ParameterizedTypeReference<List<Document>>() {
                 }))
                 .thenReturn(new ResponseEntity<>(documents, HttpStatus.OK));
         List<Document> foundDocuments = documentService.getDocumentsList();
         assertTrue(documents.containsAll(foundDocuments));
-        verify(restTemplate, times(1)).exchange("http://localhost:8080/documents",
+        verify(restTemplate, times(1)).exchange("https://localhost:8443/documents",
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<Document>>() {
                 });
     }
@@ -48,10 +48,10 @@ public class DocumentServiceImplTest {
     @Test
     public void getDocumentById_Then_Return_Document() {
         Document document = new Document((long) 1, "new document", LocalDate.now(), "Hello!");
-        when(restTemplate.getForObject("http://localhost:8080/documents/1", Document.class))
+        when(restTemplate.getForObject("https://localhost:8443/documents/1", Document.class))
                 .thenReturn(document);
         assertEquals(document, documentService.getDocumentById(document.getId()));
-        verify(restTemplate, times(1)).getForObject("http://localhost:8080/documents/1", Document.class);
+        verify(restTemplate, times(1)).getForObject("https://localhost:8443/documents/1", Document.class);
     }
 
     @Test
@@ -59,13 +59,13 @@ public class DocumentServiceImplTest {
         Document document = new Document((long) 1, "new document", LocalDate.now(), "Hello!");
         documentService.saveDocument(document);
         verify(restTemplate, times(1))
-                .postForObject("http://localhost:8080/documents/save", document, Document.class);
+                .postForObject("https://localhost:8443/documents/save", document, Document.class);
     }
 
     @Test
     public void deleteDocumentById_Should_Call_Once() {
         documentService.deleteDocumentById((long) 1);
         verify(restTemplate, times(1))
-                .delete("http://localhost:8080/documents/delete/1");
+                .delete("https://localhost:8443/documents/delete/1");
     }
 }
