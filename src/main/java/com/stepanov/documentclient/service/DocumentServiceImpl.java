@@ -18,20 +18,20 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     public List<Document> getDocumentsList() {
-        return restTemplate.exchange("http://localhost:8080/documents",
+        return restTemplate.exchange("https://localhost:8443/documents",
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<Document>>() {
                 }).getBody();
     }
 
     public Document getDocumentById(Long id) {
-        return restTemplate.getForObject("http://localhost:8080/documents/" + id, Document.class);
+        return restTemplate.getForObject("https://localhost:8443/documents/" + id, Document.class);
     }
 
     public void saveDocument(Document document) {
-        restTemplate.postForObject("http://localhost:8080/documents/save", document, Document.class);
+        restTemplate.postForObject("https://localhost:8443/documents/save", document, Document.class);
     }
 
     public void deleteDocumentById(Long id) {
-        restTemplate.delete("http://localhost:8080/documents/delete/" + id);
+        restTemplate.delete("https://localhost:8443/documents/delete/" + id);
     }
 }
